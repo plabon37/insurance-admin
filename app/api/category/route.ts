@@ -3,6 +3,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDB } from "@/lib/connectToDB";
 import Category from "@/lib/models/Category";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "http://localhost:3001",
+  "Access-Control-Allow-Methods": "GET,POST,PATCH,DELETE,OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: corsHeaders,
+  });
+}
+
 export async function GET() {
   try {
     await connectToDB();
@@ -12,10 +25,15 @@ export async function GET() {
       createdAt: -1,
     });
 
-    return NextResponse.json({
-      success: true,
-      data: categories,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        data: categories,
+      },
+      {
+        headers: corsHeaders,
+      }
+    );
   } catch (error) {
     console.error(error);
 
@@ -26,6 +44,7 @@ export async function GET() {
       },
       {
         status: 500,
+        headers: corsHeaders,
       }
     );
   }
@@ -56,6 +75,7 @@ export async function POST(request: NextRequest) {
       },
       {
         status: 201,
+        headers: corsHeaders,
       }
     );
   } catch (error: any) {
@@ -69,32 +89,20 @@ export async function POST(request: NextRequest) {
         },
         {
           status: 400,
+          headers: corsHeaders,
         }
       );
     }
 
     return NextResponse.json(
-  {
-    success: true,
-    data: categories,
-  },
-  {
-    headers: {
-      "Access-Control-Allow-Origin": "http://localhost:3001",
-      "Access-Control-Allow-Methods": "GET,POST,PATCH,DELETE,OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
+      {
+        success: false,
+        message: "Failed to create category",
+      },
+      {
+        status: 500,
+        headers: corsHeaders,
+      }
+    );
   }
-);
-  }
-}
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "http://localhost:3001",
-      "Access-Control-Allow-Methods": "GET,POST,PATCH,DELETE,OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  });
 }
