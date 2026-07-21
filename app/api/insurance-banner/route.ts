@@ -3,6 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDB } from "@/lib/connectToDB";
 import InsuranceBanner from "@/lib/models/InsuranceBanner";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function GET() {
   try {
     await connectToDB();
@@ -12,10 +22,15 @@ export async function GET() {
       createdAt: -1,
     });
 
-    return NextResponse.json({
-      success: true,
-      data: banners,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        data: banners,
+      },
+      {
+        headers: corsHeaders,
+      }
+    );
   } catch (error) {
     console.error(error);
 
@@ -26,6 +41,7 @@ export async function GET() {
       },
       {
         status: 500,
+        headers: corsHeaders,
       }
     );
   }
@@ -37,26 +53,16 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
-    const banner = await InsuranceBanner.create({
-      badge: body.badge,
-      title: body.title,
-      description: body.description,
-      buttonText: body.buttonText,
-      buttonLink: body.buttonLink,
-      email: body.email,
-      image: body.image,
-      displayOrder: body.displayOrder,
-      isActive: body.isActive,
-    });
+    const banner = await InsuranceBanner.create(body);
 
     return NextResponse.json(
       {
         success: true,
-        message: "Insurance Banner created successfully",
         data: banner,
       },
       {
         status: 201,
+        headers: corsHeaders,
       }
     );
   } catch (error) {
@@ -65,10 +71,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        message: "Failed to create insurance banner",
+        message: "Failed to create banner",
       },
       {
         status: 500,
+        headers: corsHeaders,
       }
     );
   }
