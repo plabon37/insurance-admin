@@ -27,8 +27,8 @@ const menus = [
     icon: FileText,
   },
   {
-    title: "Claims",
-    href: "/claims",
+    title: "Insurance Banner",
+    href: "/insurance-banner",
     icon: ClipboardList,
   },
   {
