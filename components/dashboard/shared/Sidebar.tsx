@@ -32,8 +32,8 @@ const menus = [
     icon: ClipboardList,
   },
   {
-    title: "Settings",
-    href: "/settings",
+    title: "Partners",
+    href: "/partners",
     icon: Settings,
   },
 ];
