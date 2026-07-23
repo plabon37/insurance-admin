@@ -7,6 +7,7 @@ import {
   Users,
   FileText,
   ClipboardList,
+
   Settings,
 } from "lucide-react";
 
@@ -34,7 +35,12 @@ const menus = [
   {
     title: "Partners",
     href: "/partners",
-    icon: Settings,
+    icon: ClipboardList,
+  },
+  {
+    title: "Working Process",
+    href: "/working-process",
+    icon: ClipboardList,
   },
 ];
 
