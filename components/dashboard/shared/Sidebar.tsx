@@ -7,7 +7,7 @@ import {
   Users,
   FileText,
   ClipboardList,
-
+Newspaper,
   Settings,
 } from "lucide-react";
 
@@ -41,6 +41,16 @@ const menus = [
     title: "Working Process",
     href: "/working-process",
     icon: ClipboardList,
+  },
+  {
+    title: "News & Events",
+    href: "/news",
+    icon: Newspaper,
+  },
+  {
+    title: "Footer CTA",
+    href: "/footer-cta",
+    icon: Newspaper,
   },
 ];
 
