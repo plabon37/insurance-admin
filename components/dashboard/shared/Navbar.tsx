@@ -12,7 +12,7 @@ export default function Navbar({
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-white px-4 shadow-sm md:px-6">
       {/* Left */}
-      <div className="flex items-center gap-4">
+      <div className=" text-black flex items-center gap-4">
         {/* Mobile Menu Button */}
         <button
           onClick={onMenuClick}
